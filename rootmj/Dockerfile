@@ -51,6 +51,5 @@ RUN wget --quiet https://github.com/root-project/root/archive/v6-12-04.tar.gz \
   && rm -rf /mjsw/ROOT/*
 
 WORKDIR /home/
-COPY start.sh /usr/local/sbin
-ENTRYPOINT ["/usr/local/sbin/start.sh"]
-# ENTRYPOINT ["/bin/bash"]
+
+ENTRYPOINT ["/bin/bash"]
