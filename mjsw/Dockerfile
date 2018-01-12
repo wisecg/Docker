@@ -1,21 +1,13 @@
 FROM wisecg/rootmj:v1
 LABEL maintainer "wisecg.neontetra@gmail.com"
 ENV TERM xterm
-WORKDIR /mjsw
 
-# Run and remove the secret file w/ the git clone commands for MGDO & GAT (it's also ignored by git)
-COPY start.sh /mjsw/
-RUN ./start.sh && rm start.sh
+ENV MGDODIR /global/projecta/projectdirs/majorana/users/wisecg/shMGDO
+ENV TAMDIR ${MGDODIR}/tam
+ENV LD_LIBRARY_PATH ${MGDODIR}/lib:${LD_LIBRARY_PATH}
 
-ENV CXXFLAGS -std=c++11
-ENV MGDODIR /mjsw/MGDO
-ENV TAMDIR $MGDODIR/tam
-ENV LD_LIBRARY_PATH $MGDODIR/lib:$LD_LIBRARY_PATH
+ENV GATDIR /global/projecta/projectdirs/majorana/users/wisecg/shMGDO
+ENV LD_LIBRARY_PATH ${GATDIR}/lib:${LD_LIBRARY_PATH}
+ENV PATH ${GATDIR}/Apps:${GATDIR}/Scripts:${PATH}
 
-ENV GATDIR /mjsw/GAT
-ENV LD_LIBRARY_PATH=${GATDIR}/lib:${LD_LIBRARY_PATH}
-ENV PATH=${GATDIR}/Apps:${GATDIR}/Scripts:${PATH}
-
-RUN cd MGDO && ./configure --enable-majorana-all \
-  && make && make install \
-  && cd ../GAT && make
+ENV ROOT_INCLUDE_PATH ${CLHEP_INCLUDE_DIR}:$MGDODIR/Base:$MGDODIR/Gerda:$MGDODIR/GerdaTransforms:$MGDODIR/Majorana:$MGDODIR/MJDB:$MGDODIR/Root:$MGDODIR/Tabree:$MGDODIR/Tools:$MGDODIR/Transforms:$TAMDIR:$TAMDIR/inc:$GATDIR/BaseClasses:$GATDIR/MGTEventProcessing:$GATDIR/MGOutputMCRunProcessing:$GATDIR/SiggenWrapper
