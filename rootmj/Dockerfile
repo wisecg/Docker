@@ -14,23 +14,6 @@ RUN apt-get -y update && apt-get -y install \
   libav-tools wget \
   && apt-get autoremove -y && rm -rf /var/lib/apt/lists*
 
-RUN pip3 install pymc3 PyWavelets tinyDB numpy scipy seaborn pandas matplotlib
-
-ENV CLHEP_VERSION 2.3.2.2
-ENV CLHEP_BASE_DIR /mjsw/CLHEP/$CLHEP_VERSION/install
-ENV LD_LIBRARY_PATH $CLHEP_BASE_DIR/lib:$LD_LIBRARY_PATH
-RUN mkdir -p /mjsw/CLHEP/$CLHEP_VERSION/install /mjsw/CLHEP/$CLHEP_VERSION/build
-WORKDIR /mjsw/CLHEP/$CLHEP_VERSION/build
-RUN wget -P /mjsw/CLHEP http://proj-clhep.web.cern.ch/proj-clhep/DISTRIBUTION/tarFiles/clhep-$CLHEP_VERSION.tgz \
-  && tar zxvf /mjsw/CLHEP/clhep-$CLHEP_VERSION.tgz -C /mjsw/CLHEP/ \
-  && cmake -DCMAKE_INSTALL_PREFIX=../install ../CLHEP \
-  && cmake --build . --config RelWithDebInfo \
-  && cmake --build . --target install \
-  && rm -rf * \
-  && cd /mjsw/CLHEP/$CLHEP_VERSION \
-  && rmdir build \
-  && rm /mjsw/CLHEP/clhep-$CLHEP_VERSION.tgz
-
 ENV ROOTSYS /usr/local/root
 ENV PATH $ROOTSYS/bin:$PATH
 ENV PYTHONDIR $PYTHONDIR:$ROOTSYS
@@ -50,6 +33,22 @@ RUN wget --quiet https://github.com/root-project/root/archive/v6-12-04.tar.gz \
   && make -j$(nproc); make && make install \
   && rm -rf /mjsw/ROOT/*
 
-WORKDIR /home/
+ENV CLHEP_VERSION 2.4.0.1
+ENV CLHEP_BASE_DIR /mjsw/CLHEP/$CLHEP_VERSION/install
+ENV LD_LIBRARY_PATH $CLHEP_BASE_DIR/lib:$LD_LIBRARY_PATH
+RUN mkdir -p /mjsw/CLHEP/$CLHEP_VERSION/install /mjsw/CLHEP/$CLHEP_VERSION/build
+WORKDIR /mjsw/CLHEP/$CLHEP_VERSION/build
+RUN wget -P /mjsw/CLHEP http://proj-clhep.web.cern.ch/proj-clhep/DISTRIBUTION/tarFiles/clhep-$CLHEP_VERSION.tgz \
+  && tar zxvf /mjsw/CLHEP/clhep-$CLHEP_VERSION.tgz -C /mjsw/CLHEP/ \
+  && cmake -DCMAKE_INSTALL_PREFIX=../install ../CLHEP \
+  && cmake --build . --config RelWithDebInfo \
+  && cmake --build . --target install \
+  && rm -rf * \
+  && cd /mjsw/CLHEP/$CLHEP_VERSION \
+  && rmdir build \
+  && rm /mjsw/CLHEP/clhep-$CLHEP_VERSION.tgz
 
+RUN pip3 install pymc3 PyWavelets tinyDB numpy scipy seaborn pandas matplotlib
+
+WORKDIR /home/
 ENTRYPOINT ["/bin/bash"]
