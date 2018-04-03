@@ -50,5 +50,7 @@ RUN wget -P /mjsw/CLHEP http://proj-clhep.web.cern.ch/proj-clhep/DISTRIBUTION/ta
 
 RUN pip3 install pymc3 PyWavelets tinyDB numpy scipy seaborn pandas matplotlib
 
+RUN apt-get -y update && apt-get install bc
+
 WORKDIR /home/
 ENTRYPOINT ["/bin/bash"]

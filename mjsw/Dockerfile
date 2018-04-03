@@ -15,3 +15,6 @@ ENV PATH ${GATDIR}/Apps:${GATDIR}/Scripts:${PATH}
 
 ENV ROOT_INCLUDE_PATH ${CLHEP_INCLUDE_DIR}:$MGDODIR/Base:$MGDODIR/Gerda:$MGDODIR/GerdaTransforms:$MGDODIR/Majorana:$MGDODIR/MJDB:$MGDODIR/Root:$MGDODIR/Tabree:$MGDODIR/Tools:$MGDODIR/Transforms:$TAMDIR:$TAMDIR/inc:$GATDIR/BaseClasses:$GATDIR/MGTEventProcessing:$GATDIR/MGOutputMCRunProcessing:$GATDIR/SiggenWrapper
 
+ENV LATDIR /global/homes/w/wisecg/lat
+
+ENV PYTHONPATH ${LATDIR}:${PYTHONPATH}
