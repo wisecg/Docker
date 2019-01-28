@@ -5,11 +5,11 @@ ENV TERM xterm
 ENV CC /usr/bin/gcc
 ENV CXX /usr/bin/g++
 
-ENV MGDODIR /global/projecta/projectdirs/majorana/users/wisecg/shMGDO
+ENV MGDODIR /global/projecta/projectdirs/majorana/data/mjd/surfmjd/analysis/low_e/shMGDO
 ENV TAMDIR ${MGDODIR}/tam
 ENV LD_LIBRARY_PATH ${MGDODIR}/install/lib:${LD_LIBRARY_PATH}
 
-ENV GATDIR /global/projecta/projectdirs/majorana/users/wisecg/shGAT
+ENV GATDIR /global/projecta/projectdirs/majorana/data/mjd/surfmjd/analysis/low_e/shGAT
 ENV LD_LIBRARY_PATH ${GATDIR}/lib:${LD_LIBRARY_PATH}
 ENV PATH ${GATDIR}/Apps:${GATDIR}/Scripts:${PATH}
 
